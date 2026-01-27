@@ -2,31 +2,35 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const schema = new Schema({
-    name: {
-        type: String,
-        required: [true, 'O Nome É Necessário'],
-        unique: false
-    },
-    email: {
-        type: String,
-        required: [true, 'O E-mail É Necessário'],
-        unique: false
-    },
-    password: {
-        type: String,
-        required: [true, 'A Senha É Necessário'],
-        unique: false
-    },
-    roles: [{
-        type: String,
-        required: true,
-        enum: ['user', 'admin'],
-        default: 'user'
-    }],
-    createDate: {
-        type: Date,
-        required: [true, 'A Data É Necessário'],
-        default: Date.now
-    }
+	name: {
+		type: String,
+		required: [true, 'O nome é necessário'],
+		trim: true
+	},
+	email: {
+		type: String,
+		required: [true, 'O e-mail é necessário'],
+		unique: true,
+		lowercase: true,
+		trim: true
+	},
+	password: {
+		type: String,
+		required: [true, 'A senha é necessária'],
+		select: false
+	},
+	role: {
+		type: String,
+		enum: ['user', 'admin'],
+		default: 'user'
+	},
+	active: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now
+	}
 });
 module.exports = mongoose.model('User', schema);
